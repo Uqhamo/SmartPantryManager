@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Smart Pantry Manager"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#1A237E"
+        android:gravity="center"
+        android:layout_marginBottom="30dp" />
+    <EditText
+        android:id="@+id/ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the Ingredient Name"
+        android:inputType="text"
+        android:layout_marginBottom="12dp" />
+    <EditText
+        android:id="@+id/quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the Quantity"
+        android:inputType="text"
+        android:layout_marginBottom="12dp" />
+    <EditText
+        android:id="@+id/Unit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the number of units"
+        android:inputType="text"
+        android:layout_marginBottom="12dp" />
+    <EditText
+        android:id="@+id/expirydate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the Expiry Date"
+        android:inputType="textPassword"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnEnter"
+        android:layout_width="146dp"
+        android:layout_height="82dp"
+        android:hint="Enter"
+        android:text="Enter"
+        android:textSize="10dp" />
+</LinearLayout>
