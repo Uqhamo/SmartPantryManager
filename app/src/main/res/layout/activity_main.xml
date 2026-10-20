@@ -35,6 +35,12 @@
         android:contentDescription="Add Item"
         app:srcCompat="@android:drawable/ic_input_add"
         />
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"/>
 
 
 </RelativeLayout>

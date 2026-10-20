@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+     app:startDestination="@+id/pantryListFragment"
+     >
+    <fragment
+        android:id="@+id/pantryListFragment"
+        android:name="com.example.smartpantrymanager.PantryListFragment"
+        android:label="My Pantry">
+        <action
+            android:id="@+id/action_pantry_to_addEdit"
+            app:destination="@+id/AddEditIngredientFragmen"/>
+        <action
+            android:id="@+id/action_pantry_to_suggested"
+            app:destination="@+id/suggestedRecipiesFragment"/>
+
+        </fragment>
+
+    <fragment
+        android:id="@+id/addEditIngredientFragment"
+        android:name="com.example.smartpantrymanager.AddEditIngredientFragment"
+        android:label="Manage Ingredient">
+        <argument
+            android:name="ingredientId"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/suggestedRecipiesFragment"
+        android:name="com.example.smartpantrymanager.suggestedRecipesFragment"
+        android:label="Suggested Recipes">
+        <action android:id="@+id/action_suggested_to_detail"
+            app:destination="@+id/RecipeFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.example.smartpantrymanager.RecipeFragment"
+        android:label="Recipe Details">
+        <argument
+            android:name="recipeId"
+            app:argType="string"/>
+    </fragment>
+</navigation>
