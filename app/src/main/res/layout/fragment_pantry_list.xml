@@ -3,24 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".PantryListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
+
     <TextView
+        android:id="@+id/txtPantryTile"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-<Button
+        android:layout_height="wrap_content"
+        android:text="Smart Pantry Manager"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#1A237E"
+        android:gravity="center"
+        android:layout_marginBottom="20dp" />
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:id="@+id/ViewPantry"
+    android:layout_weight="1"
+    android:padding="8dp"
+    android:clipToPadding="false"
+    />
+
+    <Button
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/btn_add_ingredient"
-    android:text="Add Ingredient"/>
+    android:text="Add Ingredient"
+        android:layout_marginTop="12dp"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_get_recipes"
-        android:text="Get Recipes"/>
+        android:text="Get Recipes"
+        android:layout_marginTop="8dp"/>
 
 
 </LinearLayout>
