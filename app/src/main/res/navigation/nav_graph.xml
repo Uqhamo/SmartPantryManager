@@ -10,10 +10,10 @@
         android:label="My Pantry">
         <action
             android:id="@+id/action_pantry_to_addEdit"
-            app:destination="@+id/AddEditIngredientFragmen"/>
+            app:destination="@+id/addEditIngredientFragment"/>
         <action
             android:id="@+id/action_pantry_to_suggested"
-            app:destination="@+id/suggestedRecipiesFragment"/>
+            app:destination="@+id/suggestedRecipesFragment"/>
 
         </fragment>
 

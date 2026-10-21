@@ -33,7 +33,7 @@ private PantryAdapter adapter;
         pantryList = new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.ViewPantry);
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
-        RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PantryAdapter(pantryList,this::showAddEditDialog, this::deleteItem);
         recyclerView.setAdapter(adapter);
         fabAdd.setOnClickListener(v->showAddEditDialog(-1));
@@ -50,7 +50,8 @@ private PantryAdapter adapter;
     editExpiry.setOnClickListener(v ->{
             Calendar cal = Calendar.getInstance();
             new DatePickerDialog(this,(view, year, month, dayOfMonth) ->
-                   editExpiry.setText(year+"-"+(month +1)+"-"+dayOfMonth),cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH).show());
+                   editExpiry.setText(year+"-"+(month +1)+"-"+dayOfMonth),cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH).show());
     }
     );
             if(position !=1){

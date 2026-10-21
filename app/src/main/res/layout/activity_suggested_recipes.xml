@@ -5,35 +5,40 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".SuggestedRecipes">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recipes That Are Available now "
-        android:textSize="30sp"
+        android:text="Recipes Available from your pantry ingredients "
+        android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="#1A237E"
         android:gravity="center"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_topToBottom="@id/tvTitle"
-        app:layout_bottomtoBottomOf="parent"
+        android:id="@+id/recycleViewRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_recipe"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tvNoRecipes"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="There are no Recipes that match your current pantry. "
-        android:textSize="30sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="gone"
         android:textColor="#1A237E"
         android:gravity="center"
-        app:layout_bottomtoBottomOf="parent"
-        android:layout_marginBottom="30dp" />
+        android:padding="24dp"
+         />
 
 </LinearLayout>

@@ -22,17 +22,18 @@ public class suggestedRecipesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-    View view = inflater.inflate(R.layout.fragment_suggested_recipes,container,false);
+        View view = inflater.inflate(R.layout.fragment_suggested_recipes, container, false);
 
-    String selectedRecipeId = "recipe_uqhamo_123";
-    Bundle bundle = new Bundle();
-    bundle.putString("recipeid",selectedRecipeId);
+        String selectedRecipeId = "recipe_uqhamo_123";
+        Bundle bundle = new Bundle();
+        bundle.putString("recipeid", selectedRecipeId);
 
-    View itemRow = view.findViewById(R.id.btn_get_recipes);//recipe list item mock
-        itemRow.setOnClickListener(v->{
-            itemRow.setOnClickListener(v->{
-                Navigation.findNavController(view).navigate(R.id.action_suggested_to_detail,bundle);
+        View itemRow = view.findViewById(R.id.btn_get_recipes);//recipe list item mock
+        itemRow.setOnClickListener(v -> {
+            itemRow.setOnClickListener(v -> {
+                Navigation.findNavController(view).navigate(R.id.action_suggested_to_detail, bundle);
             });
-        return view;
-    }
+            return view;
+        });
+
 }
