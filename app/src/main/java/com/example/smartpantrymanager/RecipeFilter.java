@@ -1,39 +1,41 @@
 package com.example.smartpantrymanager;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RecipeFilter {
 
-    public static void fiterRecipes(List<Recipe> masterRecipeList, List<String> userIngredients){
+    // Holds both result lists so the caller can use them
+    public static class Result {
+        public final List<Recipe> strictMatches = new ArrayList<>();
+        public final List<Recipe> almostThereMatches = new ArrayList<>();
+    }
 
-        List<Recipe> strictMatches = new ArrayList<>();
-        List<Recipe> almostThereMatches = new ArrayList<>();
+    public static Result filterRecipes(List<Recipe> masterRecipeList, List<String> userIngredients) {
 
-        for(Recipe recipe : masterRecipeList){
-            List<String> requiredIngredient = recipe.getRequiredIngredients();
+        // Normalise the pantry once: lowercase and trimmed
+        Set<String> have = new HashSet<>();
+        for (String s : userIngredients) have.add(s.trim().toLowerCase());
 
-            if(userIngredients.containsAll(requiredIngredient)){
-                strictMatches.add(recipe);
+        Result result = new Result();
+
+        for (Recipe recipe : masterRecipeList) {
+            int missingCount = 0;
+            for (String ingredient : recipe.getRequiredIngredients()) {
+                if (!have.contains(ingredient.trim().toLowerCase())) {
+                    missingCount++;
+                    if (missingCount > 1) break;
+                }
             }
-            else{
-                int missingCount =0;
-                for(String ingrendient: requiredIngredient){
-                    if(!userIngredients.contains(ingrendient)){
-                        missingCount++;
-                    }
-                    if(missingCount>1){
-                        break;
-                    }
-                }
-                if(missingCount ==1){
-                    almostThereMatches.add(recipe);
-                }
+
+            if (missingCount == 0) {
+                result.strictMatches.add(recipe);
+            } else if (missingCount == 1) {
+                result.almostThereMatches.add(recipe);
             }
         }
-        displayResults(strictMatches,almostThereMatches);
-    }
-    private static displayResults(List<Recipe>strict,List<Recipe> almostThere){
-
+        return result;
     }
 }

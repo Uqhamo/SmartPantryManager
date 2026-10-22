@@ -25,6 +25,10 @@
             android:name=".SuggestedRecipes"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".RecipeDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".SuggestedRecipes" />
     </application>
 
 </manifest>

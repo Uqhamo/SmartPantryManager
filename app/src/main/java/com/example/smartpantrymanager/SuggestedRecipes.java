@@ -21,20 +21,20 @@ public class SuggestedRecipes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_suggested_recipes);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
 
         RecyclerView rv = findViewById(R.id.recycleViewRecipes);
         TextView empty = findViewById(R.id.tvNoRecipes);
 
-        ArrayList<String[]> recipes = new DatabaseHelper(this).getSuggestedRecipes();
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        for (String[] row : new DatabaseHelper(this).getSuggestedRecipes()) {
+            ArrayList<String> ingredients = new ArrayList<>();
+            for (String s : row[1].split(",")) ingredients.add(s.trim());
+            recipes.add(new Recipe(row[0], ingredients, row[2]));
+        }
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(new RecipeAdapter(recipes));
-
         boolean none = recipes.isEmpty();
         rv.setVisibility(none ? View.GONE : View.VISIBLE);
         empty.setVisibility(none ? View.VISIBLE : View.GONE);

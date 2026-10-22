@@ -3,18 +3,17 @@ package com.example.smartpantrymanager;
 import java.util.List;
 
 public class Recipe {
-    private String title;
-    private List<String> requiredIngredients;
+    private final String name;
+    private final List<String> requiredIngredients;
+    private final String steps;
 
-    public Recipe(String title, List<String> requiredIngredients){
-        this.title = title;
+    public Recipe(String name, List<String> requiredIngredients, String steps) {
+        this.name = name;
         this.requiredIngredients = requiredIngredients;
-    }
-    public String getTitle(){
-        return title;
+        this.steps = steps;
     }
 
-    public List<String> getRequiredIngredients() {
-        return requiredIngredients;
-    }
+    public String getName() { return name; }
+    public List<String> getRequiredIngredients() { return requiredIngredients; }
+    public String getSteps() { return steps; }
 }
