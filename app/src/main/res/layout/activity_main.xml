@@ -18,13 +18,61 @@
         android:textColor="#1A237E"
         android:gravity="center"
          />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTitle"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_banner"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What's cooking today?"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Add ingredients and recipes to keep your pantry organised."
+                android:textColor="#E8EAF6"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Add Ingredients &amp; Recipes"
+                android:textColor="#1A237E"
+                app:backgroundTint="@android:color/white"
+                app:icon="@android:drawable/ic_input_add"
+                app:iconTint="#1A237E"
+                app:cornerRadius="24dp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
 
 
     <androidx.fragment.app.FragmentContainerView
@@ -33,20 +81,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNav"
-        android:layout_below="@+id/txtTitle"
+        android:layout_below="@+id/cardBanner"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottomNav"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:contentDescription="Add Item"
-        app:backgroundTint="#1A237E"
-        app:tint="@android:color/white"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
 </RelativeLayout>

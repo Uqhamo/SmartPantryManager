@@ -20,5 +20,4 @@
         android:name="com.example.smartpantrymanager.SettingsFragment"
         android:label="Settings" />
 
-
 </FrameLayout>
