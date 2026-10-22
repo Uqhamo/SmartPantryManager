@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -13,9 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,13 +35,17 @@ DatabaseHelper db;
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
+ NavHostFragment navHost = (NavHostFragment) getSupportFragmentManager()
+         .findFragmentById(R.id.nav_host_fragment);
+ BottomNavigationView bottonNav = findViewById(R.id.bottomNav);
+        NavigationUI.setupWithNavController(bottonNav,navHost.getNavController());
         pantryList = new ArrayList<>();
-        RecyclerView recyclerView = findViewById(R.id.ViewPantry);
+        RecyclerView rv = findViewById(R.id.ViewPantry);
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PantryAdapter(pantryList,this::showAddEditDialog, this::deleteItem);
-        recyclerView.setAdapter(adapter);
+        rv.setAdapter(adapter);
+
         fabAdd.setOnClickListener(v->showAddEditDialog(-1));
     }
     private void showAddEditDialog(int position){
@@ -51,8 +60,8 @@ DatabaseHelper db;
     editExpiry.setOnClickListener(v ->{
             Calendar cal = Calendar.getInstance();
             new DatePickerDialog(this,(view, year, month, dayOfMonth) ->
-                   editExpiry.setText(year+"-"+(month +1)+"-"+dayOfMonth),cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DAY_OF_MONTH).show());
+                   editExpiry.setText(String.format("%04d-%02d-%02D",year,month+1,dayOfMonth)),cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)).show();
     }
     );
             if(position !=1){
@@ -63,9 +72,15 @@ DatabaseHelper db;
                 editExpiry.setText(item.getExpiryDate());
             }
 
-            builder.setTitle(position == -1?"Add Pantry Item":"Edit Pantry Item ").setPositiveButton("Save",((dialog, which) ->{
-                String name = editName.getText().toString();
-                double qty = Double.parseDouble(editQuantity.getText().toString());
+            builder.setTitle(position == -1?"Add Pantry Item":"Edit Pantry Item ").setPositiveButton("Save",(dialog, which) ->{
+                String name = editName.getText().toString().trim();
+                String qtyText = editQuantity.getText().toString().trim();
+                if (name.isEmpty() || qtyText.isEmpty()) {
+                    Toast.makeText(this,"Name and quatity are required",Toast.LENGTH_SHORT).show();
+                return;
+                }
+                double qty = Double.parseDouble(qtyText);
+
                 String unit = editUnit.getText().toString();
                 String expiry = editExpiry.getText().toString();
 
@@ -80,12 +95,12 @@ DatabaseHelper db;
                     item.setUnit(unit);
                     item.setExpiryDate(expiry);
                     adapter.notifyItemChanged(position);
-                }}).setNegativaButton("Cancel",null).create().show();
+                }}).setNegativaButton("Cancel",null).show();
             }
-            public  void deleteItem(int position){
+             public  void deleteItem(int position){
         pantryList.remove(position);
         adapter.notifyItemRemoved(position);
-                adapter.notifyItemChanged(position);
+                adapter.notifyItemRangeChanged(position,pantryList.size() - position);
 
             }
 

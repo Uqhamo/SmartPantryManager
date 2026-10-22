@@ -11,10 +11,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="16dp"
+        android:gravity="center_vertical"
         >
-    <TextView
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Smart Pantry Manager"
@@ -23,55 +30,45 @@
         android:textColor="#1A237E"
         android:gravity="center"
         android:layout_marginBottom="16dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical"
-        >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+
 
 
             <TextView
                 android:id="@+id/textName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingredient Name:"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#1A237E"
                 android:layout_marginBottom="16dp"
+                tools:text="Flour"
                 />
 
             <TextView
                 android:id="@+id/textQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantity:"
                 android:textSize="14sp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="2dp"
+                tools:text="Quantity: 2kg"
+
                 />
 
             <TextView
                 android:id="@+id/textExpiry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expires:"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                tools:text="Expires: 2026-10-30"
+                />
 
 
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/btnEdit"
-android:contentDescription="Edit item"
-
+            android:contentDescription="Edit item"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -87,5 +84,5 @@ android:contentDescription="Edit item"
         android:src="@android:drawable/ic_menu_delete"
         />
     </LinearLayout>
-    </LinearLayout>
+
 </androidx.cardview.widget.CardView>

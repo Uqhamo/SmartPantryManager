@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".suggestedRecipesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <fragment
+        android:id="@+id/suggestedRecipiesFragment"
+
+        android:name="com.example.smartpantrymanager.suggestedRecipesFragment"
+        android:label="Suggested Recipe"/>
 
 </FrameLayout>

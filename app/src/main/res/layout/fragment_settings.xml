@@ -3,12 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <fragment
+        android:id="@+id/recipe_listFragment"
+        android:name="com.example.smartpantrymanager.Recipe_listFragment"
+        android:label="Recipes">
+        <action
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.smartpantrymanager.SettingsFragment"
+        android:label="Settings" />
+
 
 </FrameLayout>

@@ -21,16 +21,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(@Nullable Context context
     ) {
-        super(context, Database_Name, null, 1);
+        super(context, Database_Name, null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " +Table_Name+ "(id integer primary key autoincrement," +
-                "ingredient text not null, " +
-                "qty integer not null, " +
-                "uint integer not null, " +
-                "expiry datetime not null)");
+        db.execSQL("CREATE TABLE " +Table_Name+ "(Col_1 primary key autoincrement," +
+                "Col_2 text not null, " +
+                "Col_3 real not null, " +
+                "Col_4 text not null, " +
+                "Col_5 text not null)");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String ingredient,int qty,int unit,int expiry){
+    public boolean insertData(String ingredient,int qty,String unit,String expiry){
         SQLiteDatabase db = this.getWritableDatabase();
         //adding write properties to our database
         ContentValues cv = new ContentValues();
@@ -56,17 +56,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
     //To navigate through the rows of a database table, we use object called cursor
-    public boolean checkRecipe(String ingredient, int expiry){
+    public boolean checkRecipe(String ingredient){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM "+Table_Name + " WHERE "+Col_4+"= ?" +" AND " +Col_5+"=?";
-        Cursor cursor = db.rawQuery(query,new String[]{ingredient,expiry});
+        Cursor cursor = db.rawQuery(
+        "SELECT 1 FROM "+Table_Name + " WHERE "+Col_2+"= ? COLLATE NOCASE",
+        new String[]{ingredient});
         boolean exists= cursor.getCount() >0;
         cursor.close();
         return exists;
 
 
     }
-    //if you want to return everything in the database table
+
 
     public Cursor showData(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -76,14 +77,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor searchUser(String ingredient){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        return db.rawQuery("SELECT * FROM "+ Table_Name + " WHERE " + Col_4 + " = ?", new String[] {ingredient}
+        return db.rawQuery("SELECT * FROM "+ Table_Name + " WHERE " + Col_2 + " LIKE ?", new String[] {"%"+ingredient+"%"}
         );
     }
-    public boolean updateRecipe(String ingredient,
-                              int qty,
-                              int unit,
-
-                              int expiry){
+    public boolean updateItem(int id,String ingredient, double qty,String unit, String expiry){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -91,22 +88,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(Col_3,qty);
         cv.put(Col_4,unit);
         cv.put(Col_5,expiry);
+        return db.update(
+                Table_Name,cv,Col_1 +" ?",
+                new String[]{String.valueOf(id)})> 0;}
 
-        int result = db.update(
-                Table_Name,cv,Col_2 +" ?",
-                new String[]{ingredient}
-        );
-        return  result >0;
-    }
 
-    public boolean deleteData(String ingredient){
+
+
+    public boolean deleteData(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete(
-                Table_Name,Col_2 +" ?",
-                new String[]{ingredient}
-        );
-        return  result >0;
+        return db.delete(
+                Table_Name,Col_1 +" ?",
+                new String[]{String.valueOf(id)})>0;}
+
     }
-}
+
 
 
