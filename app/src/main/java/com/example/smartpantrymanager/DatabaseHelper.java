@@ -14,10 +14,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private  static  final String Table_Name ="pantrytb";
     private static final String Col_1 = "id";
-    private static final String Col_2 = "ingrendent";
-    private static final String Col_3 = "surname";
-    private static final String Col_4 = "email";
-    private static final String Col_5 = "password";
+    private static final String Col_2 = "ingredient";
+    private static final String Col_3 = "qty";
+    private static final String Col_4 = "unit";
+    private static final String Col_5 = "expiry";
 
     public DatabaseHelper(@Nullable Context context
     ) {
@@ -27,10 +27,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " +Table_Name+ "(id integer primary key autoincrement," +
-                "name text not null, " +
-                "surname text not null, " +
-                "email text not null, " +
-                "password text not null)");
+                "ingredient text not null, " +
+                "qty integer not null, " +
+                "uint integer not null, " +
+                "expiry datetime not null)");
     }
 
     @Override
@@ -39,14 +39,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String name,String surname,String email,String pass){
+    public boolean insertData(String ingredient,int qty,int unit,int expiry){
         SQLiteDatabase db = this.getWritableDatabase();
         //adding write properties to our database
         ContentValues cv = new ContentValues();
-        cv.put(Col_2,name);
-        cv.put(Col_3,surname);
-        cv.put(Col_4,email);
-        cv.put(Col_5,pass);
+        cv.put(Col_2,ingredient);
+        cv.put(Col_3,qty);
+        cv.put(Col_4,unit);
+        cv.put(Col_5,expiry);
 
         long result = db.insert(Table_Name,null,cv);
         if(result == -1){
@@ -56,10 +56,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
     //To navigate through the rows of a database table, we use object called cursor
-    public boolean checkLogin(String email, String password){
+    public boolean checkRecipe(String ingredient, int expiry){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM "+Table_Name + " WHERE "+Col_4+"= ?" +" AND " +Col_5+"=?";
-        Cursor cursor = db.rawQuery(query,new String[]{email,password});
+        Cursor cursor = db.rawQuery(query,new String[]{ingredient,expiry});
         boolean exists= cursor.getCount() >0;
         cursor.close();
         return exists;
@@ -73,40 +73,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Name, null);
         return cursor;
     }
-    public Cursor searchUser(String email){
+    public Cursor searchUser(String ingredient){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        return db.rawQuery("SELECT * FROM "+ Table_Name + " WHERE " + Col_4 + " = ?", new String[] {email}
+        return db.rawQuery("SELECT * FROM "+ Table_Name + " WHERE " + Col_4 + " = ?", new String[] {ingredient}
         );
     }
-    public boolean updateData(String email,
-                              String name,
-                              String surname,
+    public boolean updateRecipe(String ingredient,
+                              int qty,
+                              int unit,
 
-                              String password){
+                              int expiry){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(Col_2,name);
-        cv.put(Col_3,surname);
-
-        cv.put(Col_5,password);
+        cv.put(Col_2,ingredient);
+        cv.put(Col_3,qty);
+        cv.put(Col_4,unit);
+        cv.put(Col_5,expiry);
 
         int result = db.update(
-                Table_Name,cv,Col_4 +" ?",
-                new String[]{email}
+                Table_Name,cv,Col_2 +" ?",
+                new String[]{ingredient}
         );
         return  result >0;
     }
 
-    public boolean deleteData(String email){
+    public boolean deleteData(String ingredient){
         SQLiteDatabase db = this.getWritableDatabase();
         int result = db.delete(
-                Table_Name,Col_4 +" ?",
-                new String[]{email}
+                Table_Name,Col_2 +" ?",
+                new String[]{ingredient}
         );
         return  result >0;
     }
 }
 
-}
+
