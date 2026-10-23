@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String Recipe_Table = "recipetb";
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, Database_Name, null, 8);
+        super(context, Database_Name, null, 11);
     }
 
     @Override
@@ -82,6 +82,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "UPDATE " + Recipe_Table +
                         " SET image = 'scrambledeggs' WHERE name = 'Scrambled Eggs'"
         );
+        db.execSQL(
+                "UPDATE " + Recipe_Table +
+                        " SET image = 'pancake' WHERE name = 'Pancakes'"
+        );
+        db.execSQL(
+                "UPDATE " + Recipe_Table +
+                        " SET image = 'tomatopasta' WHERE name = 'Tomato Pasta'"
+        );
+        db.execSQL(
+                "UPDATE " + Recipe_Table +
+                        " SET image = 'egg_fired_rice' WHERE name = 'Egg Fried Rice'"
+        );
+
+
+
         seedRecipesIfEmpty(db);
     }
 
@@ -97,11 +112,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         addSeed(db, "Cheese Toast", "bread, cheese, butter",
                 "1. Butter the bread.\n2. Top with cheese.\n3. Grill until golden.","cheesetoast");
         addSeed(db, "Pancakes", "flour, eggs, milk, sugar, butter",
-                "1. Whisk the flour, eggs, milk and sugar into a smooth batter.\n2. Melt a little butter in a pan.\n3. Pour in a ladle of batter and cook until bubbles form.\n4. Flip and cook until golden.","");
+                "1. Whisk the flour, eggs, milk and sugar into a smooth batter.\n2. Melt a little butter in a pan.\n3. Pour in a ladle of batter and cook until bubbles form.\n4. Flip and cook until golden.","pancake");
         addSeed(db, "Tomato Pasta", "pasta, tomato, onion, garlic, oil",
-                "1. Boil the pasta until tender, then drain.\n2. Fry the chopped onion and garlic in oil.\n3. Add the chopped tomato and simmer for 10 minutes.\n4. Toss the pasta in the sauce.","");
+                "1. Boil the pasta until tender, then drain.\n2. Fry the chopped onion and garlic in oil.\n3. Add the chopped tomato and simmer for 10 minutes.\n4. Toss the pasta in the sauce.","tomatopasta");
         addSeed(db, "Egg Fried Rice", "rice, eggs, onion, oil, salt",
-                "1. Cook the rice and let it cool.\n2. Fry the chopped onion in oil.\n3. Push the onion aside, scramble the eggs in the pan.\n4. Add the rice and salt, and stir-fry for 3 minutes.","");
+                "1. Cook the rice and let it cool.\n2. Fry the chopped onion in oil.\n3. Push the onion aside, scramble the eggs in the pan.\n4. Add the rice and salt, and stir-fry for 3 minutes.","egg_fired_rice");
         addSeed(db, "Mashed Potatoes", "potato, butter, milk, salt",
                 "1. Peel and boil the potatoes until soft.\n2. Drain and return to the pot.\n3. Add the butter, milk and salt.\n4. Mash until smooth.","");
         addSeed(db, "Banana Oatmeal", "oats, milk, banana, sugar",

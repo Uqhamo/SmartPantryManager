@@ -46,11 +46,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         String imageName = recipe.getImageName();
 
+
+        android.util.Log.d("RECIPE_IMAGE",
+                recipe.getName() + " image name: " + imageName);
+
         if (imageName != null && !imageName.trim().isEmpty()) {
+
             int imageResource = holder.itemView.getContext()
                     .getResources()
                     .getIdentifier(
-                            imageName,
+                            imageName.trim().toLowerCase(),
                             "drawable",
                             holder.itemView.getContext().getPackageName()
                     );
@@ -59,9 +64,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 holder.imageRecipe.setImageResource(imageResource);
             } else {
                 holder.imageRecipe.setImageResource(R.drawable.scrambledeggs);
+
+                android.util.Log.e("RECIPE_IMAGE",
+                        "Image not found: " + imageName);
             }
+
         } else {
             holder.imageRecipe.setImageResource(R.drawable.scrambledeggs);
+
+            android.util.Log.w("RECIPE_IMAGE",
+                    "No image name for: " + recipe.getName());
         }
 
         holder.itemView.setOnClickListener(v -> {
