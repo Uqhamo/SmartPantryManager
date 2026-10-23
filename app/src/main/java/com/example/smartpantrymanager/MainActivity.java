@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         View banner = findViewById(R.id.cardBanner);
         View suggested = findViewById(R.id.suggestedSection);
         navController.addOnDestinationChangedListener((controller, destination, args) -> {
-            int vis = destination.getId() == R.id.pantryListFragment ? View.VISIBLE : View.GONE;
+            int vis = destination.getId() == R.id.homeFragment ? View.VISIBLE : View.GONE;
             banner.setVisibility(vis);
             suggested.setVisibility(vis);
         });

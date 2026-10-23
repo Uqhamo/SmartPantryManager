@@ -29,6 +29,12 @@
             android:name=".RecipeDetailActivity"
             android:exported="false"
             android:parentActivityName=".SuggestedRecipes" />
+        <activity
+            android:name=".AddItemsActivity"
+            android:exported="false"
+            android:label="Add Items"
+            android:parentActivityName=".MainActivity" />
+
     </application>
 
 </manifest>

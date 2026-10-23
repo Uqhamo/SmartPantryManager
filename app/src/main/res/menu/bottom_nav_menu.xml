@@ -15,5 +15,9 @@
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="Settings"
         />
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Home" />
 
 </menu>

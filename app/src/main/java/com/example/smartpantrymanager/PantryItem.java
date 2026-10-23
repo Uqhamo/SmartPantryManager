@@ -6,7 +6,9 @@ public class PantryItem {
     private double quantity;
     private String unit;
     private  String expiryDate;
-
+    private int id;
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
     public PantryItem(String name,double quantity,String unit,String expiryDate){
         this.name=name;
         this.quantity=quantity;

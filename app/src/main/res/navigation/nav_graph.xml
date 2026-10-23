@@ -44,4 +44,8 @@
             android:name="recipeId"
             app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.smartpantrymanager.HomeFragment"
+        android:label="Home" />
 </navigation>
