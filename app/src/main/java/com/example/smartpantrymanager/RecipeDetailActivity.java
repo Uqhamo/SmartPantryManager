@@ -19,4 +19,5 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.tvDetailSteps))
                 .setText(getIntent().getStringExtra("steps"));
     }
+
 }

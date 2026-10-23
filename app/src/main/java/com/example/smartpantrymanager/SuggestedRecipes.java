@@ -3,40 +3,62 @@ package com.example.smartpantrymanager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SuggestedRecipes extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_suggested_recipes);
 
+        DatabaseHelper db = new DatabaseHelper(this);
 
-        RecyclerView rv = findViewById(R.id.recycleViewRecipes);
-        TextView empty = findViewById(R.id.tvNoRecipes);
+        List<Recipe> allRecipes = db.getAllRecipes();
 
-        ArrayList<Recipe> recipes = new ArrayList<>();
-        for (String[] row : new DatabaseHelper(this).getSuggestedRecipes()) {
-            ArrayList<String> ingredients = new ArrayList<>();
-            for (String s : row[1].split(",")) ingredients.add(s.trim());
-            recipes.add(new Recipe(row[0], ingredients, row[2]));
-        }
+        Toast.makeText(
+                this,
+                "Recipes loaded: " + allRecipes.size(),
+                Toast.LENGTH_LONG
+        ).show();
 
+        RecipeFilter.Result result =
+                RecipeFilter.filterRecipes(allRecipes, db.getPantryNames());
+
+        showList(
+                R.id.recycleViewRecipes,
+                R.id.tvNoRecipes,
+                result.strictMatches
+        );
+
+        showList(
+                R.id.recycleViewRecipes,
+                R.id.tvNoRecipes,
+                allRecipes
+        );
+
+        RecyclerView almostThere = findViewById(R.id.rvAlmostThere);
+        almostThere.setVisibility(View.GONE);
+
+        findViewById(R.id.tvNoAlmost).setVisibility(View.GONE);
+    }
+
+    private void showList(int listId, int emptyId, List<Recipe> recipes) {
+        RecyclerView rv = findViewById(listId);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(new RecipeAdapter(recipes));
+
         boolean none = recipes.isEmpty();
+
         rv.setVisibility(none ? View.GONE : View.VISIBLE);
-        empty.setVisibility(none ? View.VISIBLE : View.GONE);
+        findViewById(emptyId).setVisibility(
+                none ? View.VISIBLE : View.GONE
+        );
     }
 }

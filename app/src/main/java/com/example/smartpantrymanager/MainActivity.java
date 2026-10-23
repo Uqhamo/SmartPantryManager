@@ -41,10 +41,26 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView rv = findViewById(R.id.rvSuggestedHome);
         rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        /*
         suggestedAdapter = new SuggestedAdapter(() ->
                 startActivity(new Intent(MainActivity.this, SuggestedRecipes.class)));
         rv.setAdapter(suggestedAdapter);
+*/
+        suggestedAdapter = new SuggestedAdapter(() -> {
 
+            android.widget.Toast.makeText(
+                    MainActivity.this,
+                    "Opening Suggested Recipes",
+                    android.widget.Toast.LENGTH_SHORT
+            ).show();
+
+            startActivity(new Intent(
+                    MainActivity.this,
+                    SuggestedRecipes.class
+            ));
+        });
+
+        rv.setAdapter(suggestedAdapter);
 
         View banner = findViewById(R.id.cardBanner);
         View suggested = findViewById(R.id.suggestedSection);

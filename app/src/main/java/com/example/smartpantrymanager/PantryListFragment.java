@@ -60,7 +60,7 @@ public class PantryListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadPantry();   // refreshes when returning from AddItemsActivity
+        loadPantry();
     }
 
     private void loadPantry() {

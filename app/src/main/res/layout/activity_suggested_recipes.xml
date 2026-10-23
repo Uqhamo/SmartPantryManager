@@ -1,44 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:background="#F5F3FF"
     tools:context=".SuggestedRecipes">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recipes Available from your pantry ingredients "
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#1A237E"
-        android:layout_marginBottom="20dp" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        tools:listitem="@layout/item_recipe"
-        />
-    <TextView
-        android:id="@+id/tvNoRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="There are no Recipes that match your current pantry. "
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        android:textColor="#1A237E"
-        android:gravity="center"
-        android:padding="24dp"
-         />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Available to cook now"
+            android:textColor="#1A237E"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="#E8EAF6"
+            />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewRecipes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/item_recipe" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvNoRecipes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="#FFFFFF"
+            android:text="No recipes match your pantry yet - add more ingredients"
+            android:textColor="#3949AB"
+
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Almost there (missing 1 ingredient)"
+            android:textColor="#E65100"
+            android:background="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAlmostThere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/item_recipe" />
+
+        <TextView
+            android:id="@+id/tvNoAlmost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="#FFFFFF"
+            android:text="No recipes are one ingredient away."
+            android:textColor="#E65100"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

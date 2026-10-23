@@ -42,8 +42,10 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
             public void onBindViewHolder(@NonNull PantryViewHolder holder, int position){
         PantryItem item = pantryList.get(position);
         holder.textName.setText(item.getName());
-        holder.textQuantity.setText("Quantity:"+item.getQuantity()+""+item.getUnit());
+        holder.textQuantity.setText("Quantity:"+item.getQuantity());
 
+        String unit = item.getUnit();
+        holder.textUnit.setText(unit== null || unit.isEmpty() ? "Unit: Not specified":"Unit:"+unit);
         String expiry = item.getExpiryDate();
         holder.textExpiry.setText(expiry == null || expiry.isEmpty()?"Expires:Not specified":"Expires:"+expiry);
 
@@ -72,7 +74,7 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
         TextView textName;
         TextView textQuantity;
         TextView textExpiry;
-
+TextView textUnit;
         ImageButton btnEdit;
         ImageButton btnDelete;
 
@@ -81,6 +83,7 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
 
             textName =itemView.findViewById(R.id.textName);
             textQuantity = itemView.findViewById(R.id.textQuantity);
+            textUnit = itemView.findViewById(R.id.textUnit);
             textExpiry = itemView.findViewById(R.id.textExpiry);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);

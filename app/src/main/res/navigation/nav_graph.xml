@@ -2,50 +2,60 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-     app:startDestination="@+id/pantryListFragment"
-     >
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.smartpantrymanager.HomeFragment"
+        android:label="Home">
+
+        <action
+            android:id="@+id/action_home_to_manageIngredient"
+            app:destination="@id/addEditIngredientFragment" />
+
+        <action
+            android:id="@+id/action_home_to_recipeDetails"
+            app:destination="@id/recipeDetailFragment" />
+
+        <action
+            android:id="@+id/action_home_to_pantry"
+            app:destination="@id/pantryListFragment" />
+
+    </fragment>
+
     <fragment
         android:id="@+id/pantryListFragment"
         android:name="com.example.smartpantrymanager.PantryListFragment"
         android:label="My Pantry">
+
         <action
             android:id="@+id/action_pantry_to_addEdit"
-            app:destination="@+id/addEditIngredientFragment"/>
-        <action
-            android:id="@+id/action_pantry_to_suggested"
-            app:destination="@+id/suggestedRecipesFragment"/>
+            app:destination="@id/addEditIngredientFragment" />
 
-        </fragment>
+    </fragment>
 
     <fragment
         android:id="@+id/addEditIngredientFragment"
         android:name="com.example.smartpantrymanager.AddEditIngredientFragment"
         android:label="Manage Ingredient">
+
         <argument
             android:name="ingredientId"
             app:argType="string"
             android:defaultValue="@null"
-            app:nullable="true"/>
+            app:nullable="true" />
 
-    </fragment>
-    <fragment
-        android:id="@+id/suggestedRecipiesFragment"
-        android:name="com.example.smartpantrymanager.suggestedRecipesFragment"
-        android:label="Suggested Recipes">
-        <action android:id="@+id/action_suggested_to_detail"
-            app:destination="@+id/RecipeFragment"/>
     </fragment>
 
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.smartpantrymanager.RecipeFragment"
         android:label="Recipe Details">
+
         <argument
             android:name="recipeId"
-            app:argType="string"/>
+            app:argType="string" />
+
     </fragment>
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.smartpantrymanager.HomeFragment"
-        android:label="Home" />
+
 </navigation>

@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="#F5F3FF"
     tools:context=".PantryListFragment">
-
 
 
     <LinearLayout
@@ -21,13 +21,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginEnd="6dp"
-            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
+
                 <TextView
                     android:id="@+id/tvTotalItems"
                     android:layout_width="wrap_content"
@@ -35,11 +38,15 @@
                     android:text="0"
                     android:textSize="28sp"
                     android:textStyle="bold"
-                    android:textColor="#1A237E" />
+                    android:textColor="#3949AB" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Items in pantry" />
+                    android:text="Items in pantry"
+                    android:textColor="#424242"
+                    android:textSize="14sp" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -48,13 +55,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="6dp"
-            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
+
                 <TextView
                     android:id="@+id/tvExpiringSoon"
                     android:layout_width="wrap_content"
@@ -63,15 +73,20 @@
                     android:textSize="28sp"
                     android:textStyle="bold"
                     android:textColor="#D32F2F" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Expiring in 3 days" />
+                    android:text="Expiring in 3 days"
+                    android:textColor="#424242"
+                    android:textSize="14sp" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 
-    <!-- Empty state (needed by updateSummary) -->
+
     <TextView
         android:id="@+id/tvEmptyPantry"
         android:layout_width="match_parent"
@@ -80,28 +95,36 @@
         android:gravity="center"
         android:padding="24dp"
         android:textSize="16sp"
+        android:textColor="#5E35B1"
         android:visibility="gone" />
 
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ViewPantry"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/ViewPantry"
         android:layout_weight="1"
         android:padding="8dp"
         android:clipToPadding="false" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_add_ingredient"
-        android:text="Add Ingredient"
-        android:layout_marginTop="12dp" />
 
     <Button
+        android:id="@+id/btn_add_ingredient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Add Ingredient"
+        android:layout_marginTop="12dp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#5E35B1" />
+
+
+    <Button
         android:id="@+id/btn_get_recipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Get Recipes"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#3949AB" />
 
 </LinearLayout>

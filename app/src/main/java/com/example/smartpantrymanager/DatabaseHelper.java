@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String Recipe_Table = "recipetb";
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, Database_Name, null, 5);
+        super(context, Database_Name, null, 8);
     }
 
     @Override
@@ -41,66 +41,105 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT NOT NULL, " +
                 "ingredients TEXT NOT NULL, " +
-                "steps TEXT)");
+                "steps TEXT, " +
+                "image TEXT)");
 
         seedRecipes(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + Table_Name);
-        db.execSQL("DROP TABLE IF EXISTS " + Recipe_Table);
-        onCreate(db);
+        Cursor cursor = db.rawQuery(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name=?",
+                new String[]{Recipe_Table});
+        boolean tableExists = cursor.moveToFirst();
+        cursor.close();
+
+        if (tableExists) {
+            Cursor cols = db.rawQuery("PRAGMA table_info(" + Recipe_Table + ")", null);
+            boolean imageExists = false;
+            while (cols.moveToNext()) {
+                if ("image".equalsIgnoreCase(cols.getString(1))) { imageExists = true; break; }
+            }
+            cols.close();
+            if (!imageExists) {
+                db.execSQL("ALTER TABLE " + Recipe_Table + " ADD COLUMN image TEXT");
+            }
+        } else {
+            db.execSQL("CREATE TABLE " + Recipe_Table + " (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "name TEXT NOT NULL, " +
+                    "ingredients TEXT NOT NULL, " +
+                    "steps TEXT, " +
+                    "image TEXT)");
+        }
+        db.execSQL(
+                "UPDATE " + Recipe_Table +
+                        " SET image = 'cheesetoast' WHERE name = 'Cheese Toast'"
+        );
+
+        db.execSQL(
+                "UPDATE " + Recipe_Table +
+                        " SET image = 'scrambledeggs' WHERE name = 'Scrambled Eggs'"
+        );
+        seedRecipesIfEmpty(db);
     }
+
 
     private void seedRecipes(SQLiteDatabase db) {
-        addSeed(db, "Scrambled Eggs", "eggs, butter, salt",
-                "1. Whisk the eggs with a pinch of salt.\n2. Melt the butter in a pan.\n3. Pour in the eggs and stir gently until set.");
+        addSeed(db, "Scrambled Eggs",
+                "eggs, butter, salt",
+                "1. Whisk the eggs with a pinch of salt.\n"
+                        + "2. Melt the butter in a pan.\n"
+                        + "3. Pour in the eggs and stir gently until set.",
+                "scrambledeggs");
+
         addSeed(db, "Cheese Toast", "bread, cheese, butter",
-                "1. Butter the bread.\n2. Top with cheese.\n3. Grill until golden.");
+                "1. Butter the bread.\n2. Top with cheese.\n3. Grill until golden.","cheesetoast");
         addSeed(db, "Pancakes", "flour, eggs, milk, sugar, butter",
-                "1. Whisk the flour, eggs, milk and sugar into a smooth batter.\n2. Melt a little butter in a pan.\n3. Pour in a ladle of batter and cook until bubbles form.\n4. Flip and cook until golden.");
+                "1. Whisk the flour, eggs, milk and sugar into a smooth batter.\n2. Melt a little butter in a pan.\n3. Pour in a ladle of batter and cook until bubbles form.\n4. Flip and cook until golden.","");
         addSeed(db, "Tomato Pasta", "pasta, tomato, onion, garlic, oil",
-                "1. Boil the pasta until tender, then drain.\n2. Fry the chopped onion and garlic in oil.\n3. Add the chopped tomato and simmer for 10 minutes.\n4. Toss the pasta in the sauce.");
+                "1. Boil the pasta until tender, then drain.\n2. Fry the chopped onion and garlic in oil.\n3. Add the chopped tomato and simmer for 10 minutes.\n4. Toss the pasta in the sauce.","");
         addSeed(db, "Egg Fried Rice", "rice, eggs, onion, oil, salt",
-                "1. Cook the rice and let it cool.\n2. Fry the chopped onion in oil.\n3. Push the onion aside, scramble the eggs in the pan.\n4. Add the rice and salt, and stir-fry for 3 minutes.");
+                "1. Cook the rice and let it cool.\n2. Fry the chopped onion in oil.\n3. Push the onion aside, scramble the eggs in the pan.\n4. Add the rice and salt, and stir-fry for 3 minutes.","");
         addSeed(db, "Mashed Potatoes", "potato, butter, milk, salt",
-                "1. Peel and boil the potatoes until soft.\n2. Drain and return to the pot.\n3. Add the butter, milk and salt.\n4. Mash until smooth.");
+                "1. Peel and boil the potatoes until soft.\n2. Drain and return to the pot.\n3. Add the butter, milk and salt.\n4. Mash until smooth.","");
         addSeed(db, "Banana Oatmeal", "oats, milk, banana, sugar",
-                "1. Heat the milk in a pot.\n2. Stir in the oats and cook for 5 minutes.\n3. Slice the banana on top.\n4. Sprinkle with sugar.");
+                "1. Heat the milk in a pot.\n2. Stir in the oats and cook for 5 minutes.\n3. Slice the banana on top.\n4. Sprinkle with sugar.","");
         addSeed(db, "Cheese Omelette", "eggs, cheese, butter, salt",
-                "1. Beat the eggs with a pinch of salt.\n2. Melt the butter in a pan.\n3. Pour in the eggs and cook until almost set.\n4. Add the grated cheese, fold and serve.");
+                "1. Beat the eggs with a pinch of salt.\n2. Melt the butter in a pan.\n3. Pour in the eggs and cook until almost set.\n4. Add the grated cheese, fold and serve.","");
         addSeed(db, "Garlic Bread", "bread, butter, garlic, salt",
-                "1. Mix softened butter with crushed garlic and a pinch of salt.\n2. Spread on the bread.\n3. Bake at 180°C for 10 minutes until crisp.");
+                "1. Mix softened butter with crushed garlic and a pinch of salt.\n2. Spread on the bread.\n3. Bake at 180°C for 10 minutes until crisp.","");
         addSeed(db, "Tuna Mayo Sandwich", "bread, tuna, mayonnaise, salt",
-                "1. Drain the tuna.\n2. Mix with the mayonnaise and a pinch of salt.\n3. Spread on a slice of bread and top with another.");
+                "1. Drain the tuna.\n2. Mix with the mayonnaise and a pinch of salt.\n3. Spread on a slice of bread and top with another.","");
         addSeed(db, "Chicken Stir Fry", "chicken, carrot, onion, oil, salt",
-                "1. Slice the chicken, carrot and onion.\n2. Heat the oil in a pan.\n3. Cook the chicken until browned.\n4. Add the vegetables and salt, and stir-fry for 5 minutes.");
+                "1. Slice the chicken, carrot and onion.\n2. Heat the oil in a pan.\n3. Cook the chicken until browned.\n4. Add the vegetables and salt, and stir-fry for 5 minutes.","");
         addSeed(db, "Roast Potatoes", "potato, oil, salt, pepper",
-                "1. Heat the oven to 200°C.\n2. Cut the potatoes into chunks and toss with oil, salt and pepper.\n3. Roast for 40 minutes, turning once.");
+                "1. Heat the oven to 200°C.\n2. Cut the potatoes into chunks and toss with oil, salt and pepper.\n3. Roast for 40 minutes, turning once.","");
         addSeed(db, "Cheesy Pasta", "pasta, cheese, butter, milk",
-                "1. Boil the pasta and drain.\n2. Melt the butter with the milk in a pot.\n3. Stir in the grated cheese until melted.\n4. Add the pasta and mix.");
+                "1. Boil the pasta and drain.\n2. Melt the butter with the milk in a pot.\n3. Stir in the grated cheese until melted.\n4. Add the pasta and mix.","");
         addSeed(db, "Beans on Toast", "beans, bread, butter",
-                "1. Toast the bread and butter it.\n2. Warm the beans in a pot for 5 minutes.\n3. Spoon the beans over the toast.");
+                "1. Toast the bread and butter it.\n2. Warm the beans in a pot for 5 minutes.\n3. Spoon the beans over the toast.","");
         addSeed(db, "French Toast", "bread, eggs, milk, sugar, butter",
-                "1. Whisk the eggs, milk and sugar.\n2. Dip the bread slices in the mixture.\n3. Fry in butter until golden on both sides.");
+                "1. Whisk the eggs, milk and sugar.\n2. Dip the bread slices in the mixture.\n3. Fry in butter until golden on both sides.","");
         addSeed(db, "Tomato Soup", "tomato, onion, garlic, oil, salt",
-                "1. Fry the chopped onion and garlic in oil.\n2. Add the chopped tomatoes and salt.\n3. Simmer for 20 minutes.\n4. Blend until smooth.");
+                "1. Fry the chopped onion and garlic in oil.\n2. Add the chopped tomatoes and salt.\n3. Simmer for 20 minutes.\n4. Blend until smooth.","");
         addSeed(db, "Lemon Garlic Chicken", "chicken, lemon, garlic, oil, salt",
-                "1. Mix the lemon juice, crushed garlic, oil and salt.\n2. Coat the chicken and rest for 15 minutes.\n3. Bake at 200°C for 30 minutes until cooked through.");
+                "1. Mix the lemon juice, crushed garlic, oil and salt.\n2. Coat the chicken and rest for 15 minutes.\n3. Bake at 200°C for 30 minutes until cooked through.","");
         addSeed(db, "Rice Pudding", "rice, milk, sugar, butter",
-                "1. Combine the rice and milk in a pot.\n2. Simmer on low for 30 minutes, stirring often.\n3. Stir in the sugar and butter.");
+                "1. Combine the rice and milk in a pot.\n2. Simmer on low for 30 minutes, stirring often.\n3. Stir in the sugar and butter.","");
         addSeed(db, "Carrot Soup", "carrot, onion, potato, butter, salt",
-                "1. Chop the carrot, onion and potato.\n2. Soften the onion in butter.\n3. Add the other vegetables, salt and enough water to cover.\n4. Simmer for 25 minutes, then blend.");
+                "1. Chop the carrot, onion and potato.\n2. Soften the onion in butter.\n3. Add the other vegetables, salt and enough water to cover.\n4. Simmer for 25 minutes, then blend.","");
         addSeed(db, "Garlic Butter Rice", "rice, garlic, butter, salt",
-                "1. Cook the rice and keep warm.\n2. Melt the butter and fry the crushed garlic for 1 minute.\n3. Stir through the rice with a pinch of salt.");
+                "1. Cook the rice and keep warm.\n2. Melt the butter and fry the crushed garlic for 1 minute.\n3. Stir through the rice with a pinch of salt.","");
     }
 
-    private void addSeed(SQLiteDatabase db, String name, String ingredients, String steps) {
+    private void addSeed(SQLiteDatabase db, String name, String ingredients, String steps, String imageName) {
         ContentValues cv = new ContentValues();
         cv.put("name", name);
         cv.put("ingredients", ingredients);
         cv.put("steps", steps);
+        cv.put("image",imageName);
         db.insert(Recipe_Table, null, cv);
     }
 
@@ -182,18 +221,89 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         r.close();
         return result;
-    }public ArrayList<Recipe> getAllRecipes() {
+    }
+    /*
+    public ArrayList<Recipe> getAllRecipes() {
         ArrayList<Recipe> list = new ArrayList<>();
         Cursor r = getReadableDatabase().rawQuery(
-                "SELECT name, ingredients, steps FROM " + Recipe_Table + " ORDER BY name", null);
+                "SELECT name, ingredients, steps, id FROM " + Recipe_Table + " ORDER BY name", null);
         while (r.moveToNext()) {
             ArrayList<String> ing = new ArrayList<>();
             for (String s : r.getString(1).split(",")) ing.add(s.trim());
-            list.add(new Recipe(r.getString(0), ing, r.isNull(2) ? "" : r.getString(2)));
+
+            Recipe recipe = new Recipe(r.getString(0), ing, r.isNull(2) ? "" : r.getString(2));
+            recipe.setId(r.getInt(3));
+            list.add(recipe);
         }
         r.close();
         return list;
+    }*/
+    public ArrayList<Recipe> getAllRecipes() {
+        ArrayList<Recipe> list = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        seedRecipesIfEmpty(db);
+
+        Cursor r = db.rawQuery(
+                "SELECT name, ingredients, steps, id, image FROM "
+                        + Recipe_Table + " ORDER BY name",
+                null
+        );
+
+
+        while (r.moveToNext()) {
+            ArrayList<String> ing = new ArrayList<>();
+
+            for (String s : r.getString(1).split(",")) {
+                ing.add(s.trim());
+            }
+
+            Recipe recipe = new Recipe(
+                    r.getString(0),
+                    ing,
+                    r.isNull(2) ? "" : r.getString(2),
+                    r.isNull(4) ? null : r.getString(4)
+            );
+
+            recipe.setId(r.getInt(3));
+            list.add(recipe);
+        }
+
+        r.close();
+        android.util.Log.d(
+                "PANTRY_RECIPES",
+                "Recipes loaded: " + list.size()
+        );
+        return list;
     }
+    public boolean deleteRecipe(int id) {
+        return getWritableDatabase().delete("recipetb", "id = ?",
+                new String[]{String.valueOf(id)}) > 0;
+    }
+
+    public ArrayList<String> getPantryNames(){
+        ArrayList<String> names = new ArrayList<>();
+        Cursor c = getReadableDatabase().rawQuery("SELECT "+Col_2+" FROM "+Table_Name,null);
+        while(c.moveToNext()) names.add(c.getString(0));
+        c.close();
+        return names;
+    }
+    private void seedRecipesIfEmpty(SQLiteDatabase db) {
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM " + Recipe_Table, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+
+        cursor.close();
+
+        if (count == 0) {
+            seedRecipes(db);
+        }
+    }
+
 
 }
 
