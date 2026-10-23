@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String Recipe_Table = "recipetb";
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, Database_Name, null, 4);
+        super(context, Database_Name, null, 5);
     }
 
     @Override
@@ -182,6 +182,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         r.close();
         return result;
+    }public ArrayList<Recipe> getAllRecipes() {
+        ArrayList<Recipe> list = new ArrayList<>();
+        Cursor r = getReadableDatabase().rawQuery(
+                "SELECT name, ingredients, steps FROM " + Recipe_Table + " ORDER BY name", null);
+        while (r.moveToNext()) {
+            ArrayList<String> ing = new ArrayList<>();
+            for (String s : r.getString(1).split(",")) ing.add(s.trim());
+            list.add(new Recipe(r.getString(0), ing, r.isNull(2) ? "" : r.getString(2)));
+        }
+        r.close();
+        return list;
     }
+
 }
 

@@ -8,39 +8,27 @@
     tools:context=".Recipe_listFragment">
 
     <TextView
-        android:id="@+id/tvStrictHeader"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Available to Cook Now"
-        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        android:text="All recipes"
+        android:textColor="#1A237E"
         android:textSize="18sp"
-        android:textColor="@android:color/black"
-        />
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvStrictMatches"
+        android:id="@+id/rvAllRecipes"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="8dp"
+        tools:listitem="@layout/item_recipe" />
 
-        />
     <TextView
-    android:id="@+id/tvAlmostHeader"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Missing Just 1 Ingredient"
-    android:textStyle="bold"
-    android:textSize="18sp"
-    android:textColor="@android:color/darker_gray"
-      android:layout_marginTop="16dp"
-    />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAlmostThereMatches"
-
+        android:id="@+id/tvNoAllRecipes"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="8dp"
-        />
-
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="24dp"
+        android:text="No recipes stored yet."
+        android:visibility="gone" />
 </LinearLayout>
